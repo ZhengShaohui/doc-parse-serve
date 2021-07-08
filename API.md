@@ -96,7 +96,7 @@
   // 每页 10 条规范，请求第 1 页
   {
       "type": 2,
-      "classId": 'xxx',
+      "classId": "xxx",
   }
   ```
 
