@@ -36,19 +36,23 @@
 
 ## 2. 请求规范列表
 
+请求规范文件列表
+
 * url: `/require`
 
 * method: `post`
 
 * body:
-
+  
+  * `type`: 请求类型，为 1
   * `page`: 页码，从 0 开始
   * `pageNum`: 每页的规范数
   * 示例：
 
-  ```json
+  ```json5
   // 每页 10 条规范，请求第 1 页
   {
+      "type": 1,
       "page": 1,
       "pageNum": 10
   }
