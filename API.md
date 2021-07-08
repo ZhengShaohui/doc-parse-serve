@@ -54,7 +54,7 @@
   {
       "type": 1,
       "page": 1,
-      "pageNum": 10
+      "classNum": 10
   }
   ```
 
