@@ -52,7 +52,6 @@
   ```json5
   // 每页 10 条规范，请求第 1 页
   {
-      "classId": xxx;('type为2时')
       "type": 1,
       "page": 1,
       "classNum": 10
@@ -66,6 +65,7 @@
   * `pageList`：规范列表，每条规范包括 `id` 和 `name` 属性
 
   ```json
+  
   {
       "totalClass": 100,
       "pageList": [
