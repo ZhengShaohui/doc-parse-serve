@@ -34,9 +34,9 @@
   }
   ```
 
-## 2. 请求规范列表
+## 2. 请求类别列表
 
-请求规范文件列表
+请求类别文件列表
 
 * url: `/require`
 
@@ -61,8 +61,8 @@
 * response
 
   * `code`、`msg`
-  * `totalClass`: 总的规范条数，用于前端计算页数
-  * `pageList`：规范列表，每条规范包括 `id` 和 `name` 属性
+  * `totalClass`: 总的类别条数，用于前端计算页数
+  * `pageList`：类别列表，每个类别包括 `id` 和 `name` 属性
 
   ```json
   
@@ -75,4 +75,45 @@
   }
   ```
 
-  
+  ``
+
+## 3. 请求规范列表
+
+请求规范列表
+
+* url: `/require`
+
+* method: `post`
+
+* body: 
+
+  * `type`: 2
+  * `page`
+  * `pageNum`
+  * `classId`: 所选类别的id
+
+* ```json
+  // 每页 10 条规范，请求第 1 页
+  {
+      "type": 2,
+      "classId": xxx,
+  }
+  ```
+
+*  response
+
+  * `code`, `msg`
+
+  * `totalForms`: 总规范数
+
+  * `pageList`:
+
+  * ```json
+    {
+        totalForms: xxx,
+        formList:
+        [
+            {"id":xxx, "content": '前五十个字符'}
+        ]
+    }
+    ```
