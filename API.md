@@ -52,6 +52,7 @@
   ```json5
   // 每页 10 条规范，请求第 1 页
   {
+      "classId": xxx;('type为2时')
       "type": 1,
       "page": 1,
       "classNum": 10
