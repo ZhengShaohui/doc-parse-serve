@@ -16,7 +16,7 @@
   
   ```json
   formData({
-      "files": [fileObject, fileObject],
+      "files": ["fileObject", "fileObject"],
       "name": "20kV及以下变电所设计规范"
   })
   ```
