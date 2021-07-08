@@ -96,7 +96,7 @@
   // 每页 10 条规范，请求第 1 页
   {
       "type": 2,
-      "classId": xxx,
+      "classId": 'xxx',
   }
   ```
 
@@ -110,10 +110,10 @@
 
   * ```json
     {
-        totalForms: xxx,
-        formList:
+        "totalForms": 20,
+        "formList":
         [
-            {"id":xxx, "content": '前五十个字符'}
+            {"id":"xxx", "content": "前五十个字符"}
         ]
     }
     ```
