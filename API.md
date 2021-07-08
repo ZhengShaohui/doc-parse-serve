@@ -61,12 +61,12 @@
 * response
 
   * `code`、`msg`
-  * `totalPage`: 总的规范条数，用于前端计算页数
+  * `totalClass`: 总的规范条数，用于前端计算页数
   * `pageList`：规范列表，每条规范包括 `id` 和 `name` 属性
 
   ```json
   {
-      "totalPage": 100,
+      "totalClass": 100,
       "pageList": [
           {"id": "xxxxxx", "name": "xxx"},
           {"id": "******", "name": "***"}
