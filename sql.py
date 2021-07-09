@@ -42,6 +42,27 @@ class SQL:
             return True
         return False
 
+    @classmethod
+    def get_all_class(cls):
+        cls.__cursor.execute('select * from class')
+        res = cls.__cursor.fetchall()
+        print(res)
+        return res
+
+    @classmethod
+    def get_all_forms(cls, class_id):
+        cls.__cursor.execute("select * from formulation where class_id='%s'" % class_id)
+        res = cls.__cursor.fetchall()
+        return res
+
+    @classmethod
+    def get_items(cls, formulation_id):
+        cls.__cursor.execute("select id, type, content, picture from item where formulation_id='%s'" % formulation_id)
+        res = cls.__cursor.fetchall()
+        return res
+
 
 if __name__ == '__main__':
-    SQL.is_existed(123)
+    # res = SQL.get_all_forms('d794517d8a734e0a95df80a21913ed34')
+    # print(SQL.get_items(res[0][0]))
+    pass
