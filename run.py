@@ -83,7 +83,8 @@ def upload():
                 content = formulation['content']
                 for item in content:
                     if funcs.is_table(item):
-                        SQL.insert_item(formulation_id, 'table', json.dumps(item), pics[item[2]+'.jpg'].decode('utf-8'))
+                        res = funcs.tran_data(item[1])
+                        SQL.insert_item(formulation_id, 'table', json.dumps(res), pics[item[2]+'.jpg'].decode('utf-8'))
                     else:
                         SQL.insert_item(formulation_id, 'text', json.dumps(item))
         else:
