@@ -91,8 +91,7 @@
 
   * `type`: 2
   * `classId`: 所选类别的id
-  
-* ```json5
+  ```json5
   {
       "type": 2,
       "classId": "xxx",
@@ -109,9 +108,45 @@
   {
       "code": 1,
       "msg": "xxxx",
-  
        "formList": [
            {"id":"xxx", "content": "前五十个字符"}
         ]
   }
   ```
+
+## 4. 请求 item 列表
+
+获取 formualtion_id 所对应的 item
+
+* url: `/require`
+
+* method: `post`
+
+* body:
+
+  * `type`: 3
+  * `formulationId`
+
+  ```json
+  {
+      "type": 3,
+      "formulationId": "xxxx",
+  }
+  ```
+  
+* response:
+
+  * `code`, `message`
+  * `itemList`
+
+  ```json
+  {
+      "code": 1,
+      "msg": "xxxx",
+      "itemList": [
+          {"id": "***", "type": "text", "context": "xxxxx", "pic": ""}
+      ]
+  }
+  ```
+
+  
