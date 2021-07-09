@@ -83,7 +83,7 @@ def upload():
                 content = formulation['content']
                 for item in content:
                     if funcs.is_table(item):
-                        SQL.insert_item(formulation_id, 'table', json.dumps(item), pics[item[2]+'.jpg'].decode('utf8'))
+                        SQL.insert_item(formulation_id, 'table', json.dumps(item), pics[item[2]+'.jpg'].decode('utf-8'))
                     else:
                         SQL.insert_item(formulation_id, 'text', json.dumps(item))
         else:
@@ -93,9 +93,57 @@ def upload():
     return {'code': 1, 'msg': '上传成功'}
 
 
-# @app.route('/require', methods=['POST'])
-# def require():
-#
+@app.route('/require', methods=['POST'])
+def require():
+    res = request.get_json()
+    if res['type'] == 1:
+        data = {}
+        page = res['page']
+        classNum = res['classNum']
+        classes = SQL.get_all_class()
+        num = len(classes)
+        data['totalClass'] = num
+        data['pageList'] = []
+        begin = classNum * page
+        end = classNum * (page + 1)
+        if num < begin:
+            data['code'] = 0
+            data['msg'] = 'fail'
+            return data
+        elif begin <= num < end:
+            for item in classes[begin: num]:
+                data['pageList'].append({'id': item[0], 'name': item[1]})
+        else:
+            for item in classes[begin:end]:
+                data['pageList'].append({'id': item[0], 'name': item[1]})
+        print(data)
+        data['code'] = 1
+        data['msg'] = 'succeed'
+        return data
+    if res['type'] == 2:
+        class_id = res['classId']
+        forms = SQL.get_all_forms(class_id)
+        formList = []
+        for item in forms:
+            formulation_id = item[0]
+            content = SQL.get_items(formulation_id)
+            print(content)
+            content = json.loads(content[0][2])
+            content = content[0]
+            if len(content) < 50:
+                formList.append({'id': formulation_id, 'content': content})
+            else:
+                formList.append({'id': formulation_id, 'content': content[:50]})
+        return {'code': 1, 'msg': 'succeed', 'formList': formList}
+    if res['type'] == 3:
+        formulation_id = res['formulationId']
+        itemList = []
+        res = SQL.get_items(formulation_id)
+        for item in res:
+            print(item)
+            itemList.append({'id': item[0], 'type': item[1], 'content': json.loads(item[2]), 'pic': item[3]})
+        return {'code': 1, 'msg': '返回成功', 'itemList': itemList}
+
 
 @app.route('/save', methods=['GET', 'POST'])
 def save():
