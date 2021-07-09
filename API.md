@@ -67,6 +67,8 @@
   ```json
   
   {
+      "code": 1,
+      "msg": "xxxx",
       "totalClass": 100,
       "pageList": [
           {"id": "xxxxxx", "name": "xxx"},
@@ -74,7 +76,7 @@
       ]
   }
   ```
-
+  
   ``
 
 ## 3. 请求规范列表
@@ -88,32 +90,28 @@
 * body: 
 
   * `type`: 2
-  * `page`
-  * `pageNum`
   * `classId`: 所选类别的id
-
-* ```json
-  // 每页 10 条规范，请求第 1 页
+  
+* ```json5
   {
       "type": 2,
       "classId": "xxx",
   }
   ```
-
+  
 *  response
 
-  * `code`, `msg`
+  * `code`,  `msg`
 
-  * `totalForms`: 总规范数
+  * `formList`: 规范列表
 
-  * `pageList`:
-
-  * ```json
-    {
-        "totalForms": 20,
-        "formList":
-        [
-            {"id":"xxx", "content": "前五十个字符"}
+  ```json
+  {
+      "code": 1,
+      "msg": "xxxx",
+  
+       "formList": [
+           {"id":"xxx", "content": "前五十个字符"}
         ]
-    }
-    ```
+  }
+  ```
