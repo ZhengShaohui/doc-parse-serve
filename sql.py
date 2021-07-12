@@ -37,7 +37,7 @@ class SQL:
     @classmethod
     def is_existed(cls, name):
         cls.__cursor.execute('select name from class')
-        names = list(map(lambda x:x[0], cls.__cursor.fetchall()))
+        names = list(map(lambda x: x[0], cls.__cursor.fetchall()))
         if name in names:
             return True
         return False
@@ -60,6 +60,10 @@ class SQL:
         cls.__cursor.execute("select id, type, content, picture from item where formulation_id='%s'" % formulation_id)
         res = cls.__cursor.fetchall()
         return res
+
+    @classmethod
+    def update_item(cls, item_id, content):
+        cls.__cursor.execute("update item set content=? where id=?", (content, item_id))
 
 
 if __name__ == '__main__':

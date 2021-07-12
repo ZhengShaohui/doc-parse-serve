@@ -17,6 +17,7 @@ def tran_data(table):
     start_r = 0
     merge = {}
     shape = [0, 0]
+    k = 0
     for item in table:
         if 'content' in item:
             title.append(item['content'])
@@ -25,7 +26,11 @@ def tran_data(table):
             cell_data.extend(res[0])
             span.extend(res[2])
             start_r = start_r + res[1][0]
-            shape[0] += res[1][0]
+            if k == 0:
+                shape = res[1]
+            else:
+                shape[0] += res[1][0]
+            k += 1
     for i in range(len(cell_data)):
         r = cell_data[i]['r']
         c = cell_data[i]['c']
@@ -42,6 +47,7 @@ def trans_table(data, start_r):
     span = []
     cells = data['cells']
     shape = data['shape']
+    print(shape)
     for item in cells:
         content = item['content']
         index = item['index']

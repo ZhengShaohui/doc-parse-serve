@@ -78,7 +78,6 @@ def upload():
             res = res.split("\n")
             for formulation in res:
                 formulation_id = SQL.insert_formulation(class_id)
-                print(formulation)
                 formulation = json.loads(formulation)
                 content = formulation['content']
                 for item in content:
@@ -117,7 +116,7 @@ def require():
         else:
             for item in classes[begin:end]:
                 data['pageList'].append({'id': item[0], 'name': item[1]})
-        print(data)
+        # print(data)
         data['code'] = 1
         data['msg'] = 'succeed'
         return data
@@ -128,7 +127,7 @@ def require():
         for item in forms:
             formulation_id = item[0]
             content = SQL.get_items(formulation_id)
-            print(content)
+            # print(content)
             content = json.loads(content[0][2])
             content = content[0]
             if len(content) < 50:
@@ -141,23 +140,28 @@ def require():
         itemList = []
         res = SQL.get_items(formulation_id)
         for item in res:
-            print(item)
+            print(item[2])
             itemList.append({'id': item[0], 'type': item[1], 'content': json.loads(item[2]), 'pic': item[3]})
         return {'code': 1, 'msg': '返回成功', 'itemList': itemList}
 
 
 @app.route('/save', methods=['GET', 'POST'])
 def save():
-    root = 'static'
-    dir = 'cache'
     if request.method == 'POST':
-        data = request.get_data().decode("utf8")
-        data = json.loads(data)['data']
-        name = data[0]['class']
-        cache = os.path.join(root, dir, name+'.json')
-        with open(cache, 'w', encoding='utf8') as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
-        return jsonify({'success': "已保存"})
+        data = request.get_json()['data']
+        if data:
+            res = {}
+            keys = ['celldata', 'merge', 'title', 'shape']
+            for key in keys:
+                if key in data:
+                    res[key] = data[key]
+                else:
+                    res[key] = None
+            res = json.dumps(res)
+            SQL.update_item(data['id'], res)
+            return jsonify({'code': 1, 'msg': "保存成功"})
+        else:
+            return jsonify({'code': 0, 'msg': "保存失败"})
 
 
 if __name__ == '__main__':
