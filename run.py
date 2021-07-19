@@ -1,17 +1,9 @@
 from config import app
-from flask import request, jsonify, url_for
-from flask_cors import CORS
+from flask import request, jsonify
 from sql import SQL
-import datetime
 import json
 import funcs
-
-import os
 import base64
-
-# import process
-
-CORS(app)
 
 
 @app.route('/upload', methods=['POST'])
@@ -110,7 +102,7 @@ def require():
         itemList = []
         res = SQL.get_items(formulation_id)
         for item in res:
-            print(item[2])
+            # print(item[2])
             itemList.append({'id': item[0], 'type': item[1], 'content': json.loads(item[2]), 'pic': item[3]})
         return {'code': 1, 'msg': '返回成功', 'itemList': itemList, "result": SQL.get_result(formulation_id)}
     return {"code": 0, "message": "请指定请求类型"}
@@ -137,7 +129,7 @@ def save():
 @app.route("/result", methods=["POST"])
 def result():
     data = request.get_json()
-    print(data)
+    # print(data)
     formulation_id = data.get("formulationId")
     result = data.get("result")
     if formulation_id and result:
