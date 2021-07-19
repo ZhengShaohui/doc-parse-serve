@@ -139,4 +139,5 @@ def result():
 
 
 if __name__ == '__main__':
+    print("test")
     app.run(host="0.0.0.0", port=8000, debug=True)
