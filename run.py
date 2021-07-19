@@ -9,7 +9,7 @@ import funcs
 import os
 import base64
 
-import process
+# import process
 
 CORS(app)
 
@@ -46,8 +46,8 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    static = 'static'
-    dirname = '20kV及以下变电所设计规范'
+    # static = 'static'
+    # dirname = '20kV及以下变电所设计规范'
     name = request.form.get('name', None)
     files = request.files.getlist('files')
 
@@ -126,14 +126,15 @@ def require():
         formList = []
         for item in forms:
             formulation_id = item[0]
+            result = item[2]
             content = SQL.get_items(formulation_id)
             # print(content)
             content = json.loads(content[0][2])
             content = content[0]
             if len(content) < 50:
-                formList.append({'id': formulation_id, 'content': content})
+                formList.append({'id': formulation_id, 'content': content, "result": result})
             else:
-                formList.append({'id': formulation_id, 'content': content[:50]})
+                formList.append({'id': formulation_id, 'content': content[:50], "result": result})
         return {'code': 1, 'msg': 'succeed', 'formList': formList}
     if res['type'] == 3:
         formulation_id = res['formulationId']
@@ -142,26 +143,38 @@ def require():
         for item in res:
             print(item[2])
             itemList.append({'id': item[0], 'type': item[1], 'content': json.loads(item[2]), 'pic': item[3]})
-        return {'code': 1, 'msg': '返回成功', 'itemList': itemList}
+        return {'code': 1, 'msg': '返回成功', 'itemList': itemList, "result": SQL.get_result(formulation_id)}
+    return {"code": 0, "message": "请指定请求类型"}
 
 
-@app.route('/save', methods=['GET', 'POST'])
+@app.route('/save', methods=['POST'])
 def save():
-    if request.method == 'POST':
-        data = request.get_json()['data']
-        if data:
-            res = {}
-            keys = ['celldata', 'merge', 'title', 'shape']
-            for key in keys:
-                if key in data:
-                    res[key] = data[key]
-                else:
-                    res[key] = None
-            res = json.dumps(res)
-            SQL.update_item(data['id'], res)
-            return jsonify({'code': 1, 'msg': "保存成功"})
-        else:
-            return jsonify({'code': 0, 'msg': "保存失败"})
+    data = request.get_json()['data']
+    if data:
+        res = {}
+        keys = ['celldata', 'merge', 'title', 'shape']
+        for key in keys:
+            if key in data:
+                res[key] = data[key]
+            else:
+                res[key] = None
+        res = json.dumps(res)
+        SQL.update_item(data['id'], res)
+        return jsonify({'code': 1, 'msg': "保存成功"})
+    else:
+        return jsonify({'code': 0, 'msg': "保存失败"})
+
+
+@app.route("/result", methods=["POST"])
+def result():
+    data = request.get_json()
+    print(data)
+    formulation_id = data.get("formulationId")
+    result = data.get("result")
+    if formulation_id and result:
+        SQL.save_result(formulation_id, result)
+        return {"code": 1, "message": "保存成功"}
+    return {"code": 0, "message": "保存失败"}
 
 
 if __name__ == '__main__':

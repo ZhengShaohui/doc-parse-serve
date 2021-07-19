@@ -16,10 +16,10 @@ class SQL:
         return id
 
     @classmethod
-    def insert_formulation(cls, class_id):
+    def insert_formulation(cls, class_id, result=''):
         id = uuid4().hex
         cls.__cursor.execute(
-            "insert into formulation (id, class_id) values ('%s', '%s')" % (id, class_id)
+            "insert into formulation (id, class_id, result ) values ('%s', '%s', '%s')" % (id, class_id, result)
         )
         cls.__con.commit()
         return id
@@ -46,7 +46,6 @@ class SQL:
     def get_all_class(cls):
         cls.__cursor.execute('select * from class')
         res = cls.__cursor.fetchall()
-        print(res)
         return res
 
     @classmethod
@@ -64,6 +63,18 @@ class SQL:
     @classmethod
     def update_item(cls, item_id, content):
         cls.__cursor.execute("update item set content=? where id=?", (content, item_id))
+        cls.__con.commit()
+
+    @classmethod
+    def save_result(cls, formulation_id, result):
+        cls.__cursor.execute("update formulation set result=? where id=?", (result, formulation_id))
+        cls.__con.commit()
+
+    @classmethod
+    def get_result(cls, formulation_id):
+        cls.__cursor.execute("select result from formulation where id=?", (formulation_id,))
+        res = cls.__cursor.fetchone()
+        return res[0]
 
 
 if __name__ == '__main__':
