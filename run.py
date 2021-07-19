@@ -14,40 +14,9 @@ import base64
 CORS(app)
 
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    dt = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # 加个时间戳防止浏览器缓存
-    # file = request.files['file']
-    # filename = file.filename
-    #
-    # pdf_dir = 'pdf'
-    # static_dir = 'static'
-    #
-    # file_path = os.path.join(static_dir, pdf_dir, filename)
-    # file.save(file_path)
-    root = 'static'
-    dir = '表格图片'
-    dirname = os.path.join(root, dir)
-    data = process.get_all_data(dirname)
-    id = 1
-    for item in data:
-        table_url = []
-        table_image = item['table_image']
-        for path in table_image:
-            table_url.append(url_for('.static', _external=True, filename=dir + path.lstrip('.')+'.png') + '?' + dt)
-        item['table_url'] = table_url
-        item['id'] = id
-        id += 1
-    # pdf_url = url_for('.static', _external=True, filename='pdf/' + filename) + '?' + dt
-    #
-    # tables = table_extract.extract(file_path)
-    return jsonify({'data': data})
-
-
 @app.route('/upload', methods=['POST'])
 def upload():
-    # static = 'static'
-    # dirname = '20kV及以下变电所设计规范'
+
     name = request.form.get('name', None)
     files = request.files.getlist('files')
 

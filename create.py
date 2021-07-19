@@ -20,6 +20,7 @@ cursor.execute(
     (
     id text,
     class_id text,
+    result text,
     primary key (id),
     foreign key (class_id) references class (id)
     )
