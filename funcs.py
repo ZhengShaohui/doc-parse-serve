@@ -26,6 +26,7 @@ def tran_data(table):
             span.extend(res[2])
             start_r = start_r + res[1][0]
             shape[0] += res[1][0]
+            shape[1] += res[1][1]
     for i in range(len(cell_data)):
         r = cell_data[i]['r']
         c = cell_data[i]['c']
