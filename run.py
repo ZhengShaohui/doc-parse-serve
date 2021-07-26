@@ -6,7 +6,7 @@ import funcs
 import base64
 
 
-@app.route('/upload', methods=['POST'])
+@app.route('/doc/upload', methods=['POST'])
 def upload():
 
     name = request.form.get('name', None)
@@ -54,7 +54,7 @@ def upload():
     return {'code': 1, 'msg': '上传成功'}
 
 
-@app.route('/require', methods=['POST'])
+@app.route('/doc/require', methods=['POST'])
 def require():
     res = request.get_json()
     if res['type'] == 1:
@@ -108,7 +108,7 @@ def require():
     return {"code": 0, "message": "请指定请求类型"}
 
 
-@app.route('/save', methods=['POST'])
+@app.route('/doc/save', methods=['POST'])
 def save():
     data = request.get_json()['data']
     if data:
@@ -126,7 +126,7 @@ def save():
         return jsonify({'code': 0, 'msg': "保存失败"})
 
 
-@app.route("/result", methods=["POST"])
+@app.route("/doc/result", methods=["POST"])
 def result():
     data = request.get_json()
     # print(data)
@@ -139,4 +139,4 @@ def result():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=23177)
